@@ -7,16 +7,8 @@ import { BiArrowBack } from "react-icons/bi";
 import { fetchDataFromApi } from "@/utils/api";
 import Link from "next/link";
 
-const HeroBanner = () => {
-    const [products, setProducts] = useState([]);
-    const getProducts = async () => {
-        const productsList = await fetchDataFromApi('/api/products?populate=*');
-        setProducts(productsList?.data);
-    }
-    console.log(products);
-    useEffect(() => {
-        getProducts();
-    }, []);
+const HeroBanner = ({products}) => {
+    
     return (
         <div className="relative text-white text-[20px] w-full max-w-[1360px] mx-auto">
             <Carousel

@@ -3,6 +3,7 @@ import React from "react";
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 import Wrapper from "./Wrapper";
 
+
 const Footer = () => {
     return (
         <footer className="bg-black text-white pt-14 pb-3">
@@ -97,7 +98,12 @@ const Footer = () => {
                     <div className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
                         <FaYoutube size={20} />
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
+                    <div 
+                    className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer"
+                    onClick={()=>{
+                        window.open(`https://www.instagram.com/_____syed_____akram_____/` , '_blank')
+                    }}
+                    >
                         <FaInstagram size={20} />
                     </div>
                 </div>
