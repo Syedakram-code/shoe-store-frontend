@@ -20,7 +20,7 @@ const Header = () => {
     const [categories, setCategories] = useState(null);
 
     const { cartItems } = useSelector((state) => state.cart);
-
+    // console.log(useSelector((state)=>state));
     const controlNavbar = () => {
         if (window.scrollY > 200) {
             if (window.scrollY > lastScrollY && !mobileMenu) {
@@ -47,7 +47,6 @@ const Header = () => {
 
     const fetchCategories = async () => {
         const { data } = await fetchDataFromApi("/api/categories?populate=*");
-        console.log(data , "from header");
         setCategories(data);
     };
 
