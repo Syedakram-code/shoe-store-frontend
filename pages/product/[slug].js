@@ -11,24 +11,51 @@ import { addToCart } from "@/store/cartSlice";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { addToWishlist } from "@/store/wishListSlice";
 
 const ProductDetails = ({ product, products }) => {
     const [selectedSize, setSelectedSize] = useState();
     const [showError, setShowError] = useState(false);
     const dispatch = useDispatch();
+    const { WishlistItems } = useSelector((state) => state.wishlist);
+    console.log(WishlistItems);
     const p = product?.data?.[0]?.attributes;
 
-    const notify = () => {
-        toast.success("Success. Check your cart!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
+    const notify = (msg, type) => {
+        if (type === "success") {
+            toast.success(msg, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        } else if (type === "warn") {
+            toast.warn(msg, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        } else {
+            toast.error(msg, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }
     };
 
     return (
@@ -103,15 +130,13 @@ const ProductDetails = ({ product, products }) => {
                                 {p.size.data.map((item, i) => (
                                     <div
                                         key={i}
-                                        className={`border rounded-md text-center py-3 font-medium ${
-                                            item.enabled
+                                        className={`border rounded-md text-center py-3 font-medium ${item.enabled
                                                 ? "hover:border-black cursor-pointer"
                                                 : "cursor-not-allowed bg-black/[0.1] opacity-50"
-                                        } ${
-                                            selectedSize === item.size
+                                            } ${selectedSize === item.size
                                                 ? "border-black"
                                                 : ""
-                                        }`}
+                                            }`}
                                         onClick={() => {
                                             setSelectedSize(item.size);
                                             setShowError(false);
@@ -153,7 +178,7 @@ const ProductDetails = ({ product, products }) => {
                                             oneQuantityPrice: p.price,
                                         })
                                     );
-                                    notify();
+                                    notify("Success,Check your Cart!", "success");
                                 }
                             }}
                         >
@@ -162,7 +187,17 @@ const ProductDetails = ({ product, products }) => {
                         {/* ADD TO CART BUTTON END */}
 
                         {/* WHISHLIST BUTTON START */}
-                        <button className="w-full py-4 rounded-full border border-black text-lg font-medium transition-transform active:scale-95 flex items-center justify-center gap-2 hover:opacity-75 mb-10">
+                        <button className="w-full py-4 rounded-full border border-black text-lg font-medium transition-transform active:scale-95 flex items-center justify-center gap-2 hover:opacity-75 mb-10"
+                            onClick={() => {
+                                dispatch(
+                                    addToWishlist({
+                                        ...product?.data?.[0],
+                                        selectedSize,
+                                        oneQuantityPrice: p.price,
+                                    })
+                                );
+                            }}
+                        >
                             Whishlist
                             <IoMdHeartEmpty size={20} />
                         </button>
